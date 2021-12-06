@@ -1,4 +1,4 @@
-package Bookservice
+package bookservices
 
 //is just over HTTP, so we just have a single transport.go.
 

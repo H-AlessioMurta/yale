@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/H-AlessioMurta/yale/Bookservice"
+	"//home/h/GitHubRepo/yale/bookservices"
 	"github.com/go-kit/kit/log"
 )
 
@@ -25,15 +25,15 @@ func main() {
 		logger = log.With(logger, "caller", log.DefaultCaller)
 	}
 
-	var s Bookservice.Service
+	var s main.Service
 	{
-		s = Bookservice.NewInmemService()
-		s = Bookservice.LoggingMiddleware(logger)(s)
+		s = main.NewInmemService()
+		s = main.LoggingMiddleware(logger)(s)
 	}
 
 	var h http.Handler
 	{
-		h = Bookservice.MakeHTTPHandler(s, log.With(logger, "component", "HTTP"))
+		h = main.MakeHTTPHandler(s, log.With(logger, "component", "HTTP"))
 	}
 
 	errs := make(chan error)

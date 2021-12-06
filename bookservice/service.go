@@ -1,7 +1,4 @@
-//Definizione delle strutture di dato libro e interfaccia del servizio.
-//gerarchia dei files presa sulla traccia di GoKit/examples
-
-package Bookservice
+package bookservices
 
 import (
 	"context"
@@ -22,7 +19,7 @@ type Author struct{
 
 type Service interface{
 	PostBook(ctx context.Context, b Book) error
-	GetBook(ctx context.Context, id string) (b Book,error)
+	GetBook(ctx context.Context, id string)(b Book,error)
 	PutBook(ctx context.Context, id string, b Book) error
 	PatchBook(ctx context.Context, id string, b Book) error
 }
