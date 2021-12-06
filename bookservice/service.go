@@ -1,7 +1,7 @@
 //Definizione delle strutture di dato libro e interfaccia del servizio.
 //gerarchia dei files presa sulla traccia di GoKit/examples
 
-package bookservice
+package Bookservice
 
 import (
 	"context"

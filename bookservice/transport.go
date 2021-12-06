@@ -1,4 +1,4 @@
-package bookservice
+package Bookservice
 
 //is just over HTTP, so we just have a single transport.go.
 
@@ -27,7 +27,7 @@ var (
 // MakeHTTPHandler mounts all of the service endpoints into an http.Handler.
 // Useful in a booksvc server.
 func MakeHTTPHandler(s Service, logger log.Logger) http.Handler {
-	r := mux.NewRouter()//Ascoltatore delle api
+	r := mux.NewRouter() //Ascoltatore delle api
 	e := MakeServerEndpoints(s)
 	options := []httptransport.ServerOption{
 		httptransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
@@ -39,7 +39,6 @@ func MakeHTTPHandler(s Service, logger log.Logger) http.Handler {
 	// PUT     /books/:id                       post updated Book information about the Book
 	// PATCH   /books/:id                       partial updated Book information
 	// DELETE  /books/:id                       remove the given Book
-	
 
 	r.Methods("POST").Path("/books/").Handler(httptransport.NewServer(
 		e.PostBookEndpoint,
@@ -102,7 +101,7 @@ func decodePutBookRequest(_ context.Context, r *http.Request) (request interface
 		return nil, err
 	}
 	return putBookRequest{
-		ID:      id,
+		ID:   id,
 		Book: Book,
 	}, nil
 }
@@ -118,7 +117,7 @@ func decodePatchBookRequest(_ context.Context, r *http.Request) (request interfa
 		return nil, err
 	}
 	return patchBookRequest{
-		ID:      id,
+		ID:   id,
 		Book: Book,
 	}, nil
 }
@@ -152,7 +151,7 @@ func decodeGetAddressRequest(_ context.Context, r *http.Request) (request interf
 		return nil, ErrBadRouting
 	}
 	return getAddressRequest{
-		BookID: id,
+		BookID:    id,
 		AddressID: addressID,
 	}, nil
 }
@@ -168,8 +167,8 @@ func decodePostAddressRequest(_ context.Context, r *http.Request) (request inter
 		return nil, err
 	}
 	return postAddressRequest{
-		BookID: id,
-		Address:   address,
+		BookID:  id,
+		Address: address,
 	}, nil
 }
 
@@ -184,7 +183,7 @@ func decodeDeleteAddressRequest(_ context.Context, r *http.Request) (request int
 		return nil, ErrBadRouting
 	}
 	return deleteAddressRequest{
-		BookID: id,
+		BookID:    id,
 		AddressID: addressID,
 	}, nil
 }

@@ -1,4 +1,4 @@
-package bookservice
+package Bookservice
 
 import (
 	"context"
@@ -127,8 +127,6 @@ func (e Endpoints) DeleteBook(ctx context.Context, id string) error {
 	return resp.Err
 }
 
-
-
 // MakePostBookEndpoint returns an endpoint via the passed service.
 // Primarily useful in a server.
 func MakePostBookEndpoint(s Service) endpoint.Endpoint {
@@ -179,8 +177,6 @@ func MakeDeleteBookEndpoint(s Service) endpoint.Endpoint {
 	}
 }
 
-
-
 // We have two options to return errors from the business logic.
 //
 // We could return the error via the endpoint itself. That makes certain things
@@ -211,14 +207,14 @@ type getBookRequest struct {
 }
 
 type getBookResponse struct {
-	Book Book `json:"Book,omitempty"`
-	Err     error   `json:"err,omitempty"`
+	Book Book  `json:"Book,omitempty"`
+	Err  error `json:"err,omitempty"`
 }
 
 func (r getBookResponse) error() error { return r.Err }
 
 type putBookRequest struct {
-	ID      string
+	ID   string
 	Book Book
 }
 
@@ -229,7 +225,7 @@ type putBookResponse struct {
 func (r putBookResponse) error() error { return nil }
 
 type patchBookRequest struct {
-	ID      string
+	ID   string
 	Book Book
 }
 
