@@ -143,7 +143,7 @@ func MakeGetBookEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(getBookRequest)
 		b, e := s.GetBook(ctx, req.ID)
-		return getBookResponse{Book: p, Err: e}, nil
+		return getBookResponse{Book: b, Err: e}, nil
 	}
 }
 

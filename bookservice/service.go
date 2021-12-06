@@ -2,27 +2,31 @@ package bookservices
 
 import (
 	"context"
-	"error"
+	"errors"
 	"sync"
 )
+
+
+
+type Service interface{
+	PostBook(ctx context.Context, b Book) error
+	GetBook(ctx context.Context, id string)(Book, error)
+	PutBook(ctx context.Context, id string, b Book) error
+	PatchBook(ctx context.Context, id string, b Book) error
+}
 
 type Book struct{
 	ID string `json:"id"`
 	Title string `json:"titolo,omitempty"`
-	Authors []string `json:"authors,omitempty"`
+	Authors string `json:"authors,omitempty"`
 }
+
 /*Puo essere inutile ai fini dell'esercizio
 type Author struct{
 	ID       string `json:"id"`
 	FullName string `json:"fullname,omitempty"`
 }*/
 
-type Service interface{
-	PostBook(ctx context.Context, b Book) error
-	GetBook(ctx context.Context, id string)(b Book,error)
-	PutBook(ctx context.Context, id string, b Book) error
-	PatchBook(ctx context.Context, id string, b Book) error
-}
 
 var (
 	ErrInconsistentIDs = errors.New("inconsistent IDs")
@@ -53,7 +57,7 @@ func (s *inmemService) PostBook(ctx context.Context, b Book) error {
 	return nil
 }
 
-func (s *inmemService) GetBook(ctx context.Context, id string) (Profile, error) {
+func (s *inmemService) GetBook(ctx context.Context, id string) (Book, error) {
 	s.mtx.RLock()
 	defer s.mtx.RUnlock()
 	b, ok := s.m[id]
@@ -81,7 +85,7 @@ func (s *inmemService) PatchBook(ctx context.Context, id string, b Book) error {
 	s.mtx.Lock()
 	defer s.mtx.Unlock()
 
-	existing, ok := b.m[id]
+	existing, ok := s.m[id]
 	if !ok {
 		return ErrNotFound // PATCH = update existing, don't create
 	}
@@ -92,7 +96,7 @@ func (s *inmemService) PatchBook(ctx context.Context, id string, b Book) error {
 	// I'm leaving that out.
 
 	if b.Title != "" {
-		existing.Name = b.Title
+		existing.Title = b.Title
 	}
 	if len(b.Authors) > 0 {
 		existing.Authors = b.Authors

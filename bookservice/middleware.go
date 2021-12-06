@@ -26,7 +26,7 @@ type loggingMiddleware struct {
 
 func (mw loggingMiddleware) PostBook(ctx context.Context, b Book) (err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "PostBook", "id", p.ID, "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "PostBook", "id", b.ID, "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.PostBook(ctx, b)
 }
