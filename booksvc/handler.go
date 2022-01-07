@@ -92,7 +92,6 @@ func (s *Server) putBook(w http.ResponseWriter, r *http.Request) {
         respondWithError(w, http.StatusBadRequest, "Invalid Book ID")
         return
     }
-
     var b Book
     decoder := json.NewDecoder(r.Body)
     if err := decoder.Decode(&b); err != nil {

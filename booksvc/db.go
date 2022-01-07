@@ -93,7 +93,6 @@ func getBooks(db *sql.DB) ([]Book, error) {
             b.Authors = nullAuthors.String
             books = append(books, b)
         }
-        books = append(books, b)
     }
     return books, nil
   }
