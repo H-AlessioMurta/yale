@@ -1,0 +1,55 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+scalar Time
+
+
+type Book {
+    id: ID!
+    title: String!
+    authors: String!
+}
+
+type Customer {
+    id:ID!
+    name: String!
+    surname: String!
+    nin: String!
+}
+
+type Borrowed{
+    idBorrowing: ID!
+    idCustomer:ID!
+    idBook:ID!
+    starting: Time!
+    expiring: Time!
+    returned: Boolean!
+}
+
+type Query {
+    books: [Book!]!
+    book(id: ID!): Book!
+    customers: [Customer!]!
+    customer(id:ID!): Customer!
+    borrowsnotreturned:[Borrowed!]
+    borrowsexpriring:[Borrowed!]
+    borrowsforcustomer(id: ID!):[Borrowed!]
+    borrowsforbook(id: ID!):[Borrowed!]
+}
+
+input Borrowed_create{
+    idCustomer: String
+    idBook: String
+}
+
+type Mutation{
+    Borrow_create(data: Borrowed_create!):Borrowed
+    Returnedbook(id:ID):Borrowed
+    Post_Book(title: String,authors:String):Book
+    Put_Book(id:ID,title: String,authors:String):Book
+    Delete_Book(id:ID):String
+    Post_Customer(name: String,surname: String,nin: String):Customer
+    Put_Customer(id:ID, name: String,surname: String,nin: String):Customer
+    Delete_Customer(id:ID):String
+}

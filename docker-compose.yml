@@ -1,0 +1,44 @@
+version: "3"
+services:
+  # Databases
+  bookdatabase:
+    image: postgres:12-alpine
+    container_name: bookdatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./databases/books_db:/var/lib/postgresql/data
+      - ./initBooks.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: books
+  customerdatabase:
+    image: postgres:12-alpine
+    container_name: customerdatabase
+    ports:
+      - "5433:5433"
+    volumes:
+      - ./databases/customers_db:/var/lib/postgresql/data
+      - ./initCustomers.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: customers
+    command: -p 5433
+#  borrowmongo:
+#    image: mongo:4
+#    container_name: borrowmongo
+#    ports:
+#         - "27017:27017"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bomongo
+      MONGO_INITDB_ROOT_PASSWORD: bomongo
+      MONGO_INITDB_DATABASE: borrow
+    volumes:
+    - ./databases/borrow_db:/data/db
+    - ./initBorrow.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    command: [--auth]
