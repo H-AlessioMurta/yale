@@ -2,6 +2,7 @@
 #
 # https://gqlgen.com/getting-started/
 
+#For use go's time.Time
 scalar Time
 
 
@@ -28,14 +29,18 @@ type Borrowed{
 }
 
 type Query {
+    borrows:[Borrowed!]
+    borrow(id:ID):Borrowed!
     books: [Book!]!
     book(id: ID!): Book!
     customers: [Customer!]!
     customer(id:ID!): Customer!
     borrowsnotreturned:[Borrowed!]
-    borrowsexpriring:[Borrowed!]
     borrowsforcustomer(id: ID!):[Borrowed!]
     borrowsforbook(id: ID!):[Borrowed!]
+    Get_ID_Book(title:String!,authors:String!):Book!
+    Get_ID_Customer(name:String!,surname:String!,nin:String!):Customer!
+    Get_ID_Borrowed(idb:String!,idc:String!):Borrowed!
 }
 
 input Borrowed_create{

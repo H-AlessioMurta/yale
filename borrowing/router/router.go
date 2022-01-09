@@ -1,3 +1,7 @@
+/*
+* In this package, we gonna use all crud operation on booksvc and customer svc, as SAGA pattern
+*/
+
 package router
 
 import (
@@ -94,23 +98,6 @@ func CheckCustomer(id string) bool{
 		 return false
 	 }  
 }
-/*
-func PostBook(t string, a string )(*model.Book,error){
-	payload :=map[string]string{"title": t, "authors": a}
-	body,err := json.Marshal(payload)
-	l.CheckErr(err)
-	response, err := myClient.Post(BOOKAPI,"application/json", bytes.NewBuffer(body))
-	l.CheckErr(err)
-	defer response.Body.Close()
-	if response.StatusCode == http.StatusCreated{
-		var book *model.Book
-		err = json.NewDecoder(response.Body).Decode(&book)
-		l.CheckErr(err)
-		return book, err
-	}else{
-		 return &model.Book{}, errors.New(parsingErr(*response))
-	}
-}*/
 
 func BookRequestHandler(payload map[string]string,method string, id string)(*model.Book,error){
 	path := BOOKAPI
@@ -122,6 +109,7 @@ func BookRequestHandler(payload map[string]string,method string, id string)(*mod
 	request, err := http.NewRequest(method,path, bytes.NewBuffer(body))
 	l.CheckErr(err)
 	request.Header.Set("Content-Type", "application/json; charset=utf-8")
+	l.LogRequest(request)
 	response, err := myClient.Do(request)
 	l.CheckErr(err)
 	defer request.Body.Close()
@@ -146,6 +134,7 @@ func CustomerRequestHandler(payload map[string]string,method string, id string)(
 	request, err := http.NewRequest(method,path, bytes.NewBuffer(body))
 	l.CheckErr(err)
 	request.Header.Set("Content-Type", "application/json; charset=utf-8")
+	l.LogRequest(request)
 	response, err := myClient.Do(request)
 	l.CheckErr(err)
 	defer request.Body.Close()
@@ -176,4 +165,26 @@ func Eraser(apiUri string, id string)(*string,error){
 	}
 	l.LogError(r)
 	return &id,errors.New("Not found")
+}
+
+func GetIDBook(t string, a string)(*model.Book,error){
+	books, err := GetBooks()
+	l.CheckErr(err)
+	for i, _:=range books{
+		if books[i].Title == t && books[i].Authors == a{
+			return books[i],nil
+		} 
+	}
+	return nil, errors.New("No Book with this title and author")
+}
+
+func GetIDCustomer(n string, s string,nin string)(*model.Customer,error){
+	cs, err := GetCustomers()
+	l.CheckErr(err)
+	for i, _:=range cs{
+		if cs[i].Name == n && cs[i].Surname == s && cs[i].Nin == nin{
+			return cs[i],nil
+		} 
+	}
+	return nil, errors.New("No Customer with this name, surname, nin")
 }

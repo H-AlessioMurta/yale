@@ -1,5 +1,5 @@
 package logger
-
+// A custom modification for log, just adding same flavour color and specific intercation for our graph/model
 import (
     "net/http"
     "log"
@@ -55,9 +55,11 @@ func LogResponse(message string) {
 
 func LogResponseBook(b *model.Book) {   
     message := "\033[32m[Response]\033[0m:\n"+
-        "\033[35m"+
+        "\033[35mBook id: "+
         b.ID+"\n"+
+        "Book titile: "+
         b.Title+"\n"+
+        "Book authors: "+
         b.Authors+"\n"+
         "\033[0m"
     log.Println(message)
@@ -66,10 +68,13 @@ func LogResponseBook(b *model.Book) {
 
 func LogResponseCustomer(c *model.Customer) {   
     message := "\033[32m[Response]\033[0m:\n"+
-        "\033[35m"+
+        "\033[35mCustomer id: "+
         c.ID+"\n"+
+        "Customer name: "+
         c.Name+"\n"+
+        "Customer surname: "+
         c.Surname+"\n"+
+        "Customer National identifier number: "+
         c.Nin+"\n"+
         "\033[0m"
     log.Println(message)
@@ -77,18 +82,23 @@ func LogResponseCustomer(c *model.Customer) {
 
 func LogResponseBorrowing(c *model.Borrowed) {   
     message := "\033[32m[Response]\033[0m:\n"+
-        "\033[35m"+
+        "\033[35mID Borrow :"+
         c.IDBorrowing+"\n"+
+        "Id book: "+
         c.IDBook+"\n"+
+        "Id customer: "+
         c.IDCustomer+"\n"+
+        "When the borrow start : "+
         c.Starting.String()+"\n"+
+        "Deadline for returning the book: "+
         c.Expiring.String()+"\n"+
+        "Is the book returned: "+
         strconv.FormatBool(c.Returned)+"\n"+
         "\033[0m"
     log.Println(message)
 }
 
-
+//Cause a lot of errors need to be checked in Go, i just do it here for avoid to write the same "if check and panifc".
 func CheckErr(err error) {
     if err != nil {
         LogFatal(err.Error(),err)
