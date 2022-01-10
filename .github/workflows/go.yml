@@ -61,9 +61,9 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/customersvc
-        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
-        build_args: |
-          TAG=${{ steps.get_commit}}
+       # tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
+        #build_args: |
+         # TAG=${{ steps.get_commit}}
   build-borrowingsvc:
       runs-on: ubuntu-latest
       defaults:
@@ -88,6 +88,6 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_REPO_PASS}}
           repository: ${{ secrets.DOCKER_USER }}/borrowingsvc
-          tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
-          build_args: |
-            TAG=${{ steps.get_commit}}
+        #  tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
+         # build_args: |
+          #  TAG=${{ steps.get_commit}}
