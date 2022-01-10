@@ -35,7 +35,7 @@ jobs:
         repository: ${{ secrets.DOCKER_REPO }}/playground
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         build_args: |
-          TAG=${{ steps.get_commit
+          TAG=${{ steps.get_commit}}
   build-customersvc:
     runs-on: ubuntu-latest
     defaults:
@@ -62,7 +62,7 @@ jobs:
         repository: ${{ secrets.DOCKER_REPO }}/playground
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         build_args: |
-          TAG=${{ steps.get_commit
+          TAG=${{ steps.get_commit}}
   build-borrowingsvc:
       runs-on: ubuntu-latest
       defaults:
@@ -89,4 +89,4 @@ jobs:
           repository: ${{ secrets.DOCKER_REPO }}/playground
           tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
           build_args: |
-            TAG=${{ steps.get_commit
+            TAG=${{ steps.get_commit}}
