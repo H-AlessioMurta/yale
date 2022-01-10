@@ -62,16 +62,17 @@ jobs:
        # tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         #build_args: |
          # TAG=${{ steps.get_commit}}
+   
   build-borrowingsvc:
     runs-on: ubuntu-latest
     defaults:
       run:
-          working-directory: borrowingsvc
+        working-directory: borrowingsvc
     steps:
     - uses: actions/checkout@v2
-    #- name: Add hosts to /etc/hosts
-    #  run: |
-     #   sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
+    - name: Add hosts to /etc/hosts
+      run: |
+        sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
       run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
@@ -81,11 +82,11 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
-        path: borrowingsvc
-        dockerfile: borrowingsvc/Dockerfile
+        path: borrowing
+        dockerfile: borrowing/Dockerfile
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/borrowingsvc
-        #  tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
-         # build_args: |
-          #  TAG=${{ steps.get_commit}}
+       # tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
+       # build_args: |
+        #  TAG=${{ steps.get_commit}}
