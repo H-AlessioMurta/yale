@@ -14,9 +14,9 @@ jobs:
         working-directory: booksvc
     steps:
     - uses: actions/checkout@v2
-    - name: Add hosts to /etc/hosts
-      run: |
-        sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
+ #   - name: Add hosts to /etc/hosts
+ #     run: |
+ #       sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
       run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
@@ -42,9 +42,9 @@ jobs:
         working-directory: customersvc
     steps:
     - uses: actions/checkout@v2
-    - name: Add hosts to /etc/hosts
-      run: |
-        sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
+  #  - name: Add hosts to /etc/hosts
+  #    run: |
+  #      sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
       run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
@@ -70,9 +70,9 @@ jobs:
         working-directory: borrowingsvc
     steps:
     - uses: actions/checkout@v2
-    - name: Add hosts to /etc/hosts
-      run: |
-        sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
+   # - name: Add hosts to /etc/hosts
+    #  run: |
+     #   sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
       run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
