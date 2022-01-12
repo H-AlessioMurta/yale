@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: booksvc
+        working-directory: booksvc/
     steps:
     - uses: actions/checkout@v2
     - name: Add hosts to /etc/hosts
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: customersvc
+        working-directory: customersvc/
     steps:
     - uses: actions/checkout@v2
     - name: Add hosts to /etc/hosts
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: borrowing
+        working-directory: borrowing/
     steps:
     - uses: actions/checkout@v2
     - name: Add hosts to /etc/hosts
