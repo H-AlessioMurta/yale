@@ -22,12 +22,9 @@ jobs:
         working-directory: booksvc/
     steps:
     - uses: actions/checkout@v2
-    - name: Add hosts to /etc/hosts
-      run: |
-        sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
-      run: echo ::set-output name=BRANCH::$(echo ${GITHUB_REF#refs/heads/})
+      run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
     - name: Get the commit SHA
       id: get_commit_sha
       run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
@@ -76,7 +73,7 @@ jobs:
         repository: ${{ secrets.DOCKER_USER }}/customersvc
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         build_args: |
-          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
+          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH}}
    
   build-borrowingsvc:
     runs-on: ubuntu-latest
