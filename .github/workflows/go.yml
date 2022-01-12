@@ -83,8 +83,8 @@ jobs:
     - name: Get the commit SHA
       id: get_commit_sha
       run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
-    - name: Test
-      run: go test -v .
+    #- name: Test
+     # run: go test -v .
     - name: Build
       run: go build .
     - name: Build and push Docker image
