@@ -2,10 +2,6 @@ name: Go
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 
 jobs:
   #dbtest:
@@ -22,21 +18,12 @@ jobs:
         working-directory: booksvc
     steps:
     - uses: actions/checkout@v2
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      with:
-        images: ${{ secrets.DOCKER_USER }}/booksvc
-      
-         
-    
-    
-    #- name: Get branch
-     # id: get_branch
-     # run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
-   # - name: Get the commit SHA
-    #  id: get_commit_sha
-    #  run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
+    - name: Get branch
+      id: get_branch
+      run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
+    - name: Get the commit SHA
+      id: get_commit_sha
+      run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
     #- name: Test
      # run: go test -v .
     - name: Build
@@ -49,9 +36,9 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        #tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}, latest
+        
+        
     
           
   build-customersvc:
