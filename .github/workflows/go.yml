@@ -27,7 +27,7 @@ jobs:
         sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
-      run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
+      run: echo ::set-output name=BRANCH::$(echo ${GITHUB_REF#refs/heads/})
     - name: Get the commit SHA
       id: get_commit_sha
       run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
