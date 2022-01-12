@@ -36,7 +36,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}, latest
+        #tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}, latest
         
         
     
@@ -77,9 +77,6 @@ jobs:
         working-directory: borrowing
     steps:
     - uses: actions/checkout@v2
-    - name: Add hosts to /etc/hosts
-      run: |
-        sudo echo "127.0.0.1 customer-mongodb order-postgres kafka" | sudo tee -a /etc/hosts
     - name: Get branch
       id: get_branch
       run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF | cut -d / -f 3)
@@ -98,6 +95,6 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/borrowingsvc
-        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
-        build_args: |
-          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
+       # tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
+      #  build_args: |
+       #   TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
