@@ -6,7 +6,15 @@ on:
   pull_request:
     branches: [ main ]
 
+
 jobs:
+  dbtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d
+     
   build-booksvc:
     runs-on: ubuntu-latest
     defaults:
@@ -24,7 +32,9 @@ jobs:
       id: get_commit_sha
       run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
     - name: Test
-      run: go test -v ./...
+      run: go test -v .
+    - name: Build
+      run: go build .
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
@@ -54,7 +64,9 @@ jobs:
       id: get_commit_sha
       run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
     - name: Test
-      run: go test -v ./...
+      run: go test -v .
+    - name: Build
+      run: go build .
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
@@ -84,7 +96,9 @@ jobs:
       id: get_commit_sha
       run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
     - name: Test
-      run: go test -v ./...
+      run: go test -v .
+    - name: Build
+      run: go build .
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
