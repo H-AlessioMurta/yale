@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: booksvc/
+        working-directory: booksvc
     steps:
     - uses: actions/checkout@v2
     - name: Get branch
@@ -35,7 +35,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
-        path: booksvc
+        path: booksvc/
         dockerfile: booksvc/Dockerfile
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: customersvc/
+        working-directory: customersvc
     steps:
     - uses: actions/checkout@v2
     - name: Add hosts to /etc/hosts
@@ -66,7 +66,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
-        path: customersvc
+        path: customersvc/
         dockerfile: customersvc/Dockerfile
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: borrowing/
+        working-directory: borrowing
     steps:
     - uses: actions/checkout@v2
     - name: Add hosts to /etc/hosts
@@ -98,7 +98,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
       with:
-        path: borrowing
+        path: borrowing/
         dockerfile: borrowing/Dockerfile
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
