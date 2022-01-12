@@ -45,7 +45,7 @@ jobs:
         repository: ${{ secrets.DOCKER_USER }}/booksvc
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         build_args: |
-          TAG=${{ steps.get_commit}}
+          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
           
   build-customersvc:
     runs-on: ubuntu-latest
@@ -77,7 +77,7 @@ jobs:
         repository: ${{ secrets.DOCKER_USER }}/customersvc
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         build_args: |
-          TAG=${{ steps.get_commit}}
+          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
    
   build-borrowingsvc:
     runs-on: ubuntu-latest
@@ -109,4 +109,4 @@ jobs:
         repository: ${{ secrets.DOCKER_USER }}/borrowingsvc
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}, latest
         build_args: |
-          TAG=${{ steps.get_commit}}
+          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
