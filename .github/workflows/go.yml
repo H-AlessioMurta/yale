@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}_${{ RELEASE_VERSION}}, latest
+        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}_${{ env.RELEASE_VERSION}}, latest
         
         
     
