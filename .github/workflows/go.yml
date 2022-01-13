@@ -27,12 +27,6 @@ jobs:
           echo ${{ env.RELEASE_VERSION }}
           echo $COMMIT
           echo ${{ env.COMMIT }}
-    - name: Get branch
-      id: get_branch
-      run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF)
-    - name: Get the commit SHA
-      id: get_commit_sha
-      run: echo ::set-output name=COMMIT_SHA::$(git rev-parse --short "$GITHUB_SHA")
     - name: Test
       run: |
           echo $COMMIT_SHA
@@ -49,7 +43,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}_${{ env.RELEASE_VERSION}}, latest
+        tags: ${{ env.COMMIT }}_${{ env.RELEASE_VERSION}}, latest
         
         
     
