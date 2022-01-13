@@ -35,7 +35,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        tags: ${{ secrets.DOCKER_USER }}/booksvc:${{ env.RELEASE_VERSION }},latest
+        tags: ${{ env.RELEASE_VERSION }},latest
           
           
   build-customersvc:
