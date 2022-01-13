@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customersvc
+  labels:
+    app: customersvc
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: customersvc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 2
+  template:
+    metadata:
+      labels:
+        app: customersvc
+        tier: service
+    spec:
+      containers:
+      - name: customersvc
+        image: "alessiomurta/customersvc:latest"
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "125m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8014
+        readinessProbe:
+          httpGet:
+            path: /query
+            port: 8014
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        livenessProbe:
+         httpGet:
+            path: /query
+            port: 8014
+          initialDelaySeconds: 5
+          timeoutSeconds: 5       
+        env:
+        - name: PORT
+          value: "8014"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customersvc
+  labels:
+    app: customersvc
+    tier: service
+spec:
+  type: NodePort
+  ports:
+  - port: 8014
+  selector:
+    app: customersvc
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: customersvc
+  labels:
+    app: customersvc
+    tier: backend
+spec:
+  backend:
+    serviceName: customersvc
+    servicePort: 8014

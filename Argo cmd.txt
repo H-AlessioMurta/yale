@@ -1,0 +1,11 @@
+argocd app create yale \
+    --repo https://github.com/H-AlessioMurta/yale \
+    --path https://github.com/H-AlessioMurta/yale/K8s/  \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace default \
+    --auto-prune \
+    --self-heal \
+    --sync-policy auto \
+    --sync-option CreateNamespace=true \
+    --revision master 
+application 'yale' created

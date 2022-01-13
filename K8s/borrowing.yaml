@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: borrowingsvc
+  labels:
+    app: borrowingsvc
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: borrowingsvc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 2
+  template:
+    metadata:
+      labels:
+        app: borrowingsvc
+        tier: service
+    spec:
+      containers:
+      - name: borrowingsvc
+        image: "alessiomurta/borrowingsvc:latest"
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "125m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /query
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        livenessProbe:
+         httpGet:
+            path: /query
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5       
+        env:
+        - name: PORT
+          value: "8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: borrowingsvc
+  labels:
+    app: borrowingsvc
+    tier: service
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+  selector:
+    app: borrowingsvc
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: borrowingsvc
+  labels:
+    app: borrowingsvc
+    tier: backend
+spec:
+  backend:
+    serviceName: borrowingsvc
+    servicePort: 8080
