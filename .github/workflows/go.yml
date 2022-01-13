@@ -23,13 +23,9 @@ jobs:
     - name: Test
       run: |
           echo ${{ env.RELEASE_VERSION }}
-    - name: Test
-      run: |
-          echo $COMMIT_SHA
-          echo ${{ env.COMMIT_SHA }}
     #- name: Test
      # run: go test -v .
-    - name: Build
+    - name: Build Go binary
       run: go build .
     - name: Build and push Docker image
       uses: docker/build-push-action@v1.1.0 
@@ -39,7 +35,8 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        tags: ${{ env.RELEASE_VERSION }}_latest
+        build_args: |
+          ${{ env.RELEASE_VERSION }}_latest
         
         
     
