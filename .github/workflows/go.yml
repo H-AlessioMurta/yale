@@ -22,7 +22,7 @@ jobs:
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}"-$(git rev-parse --short HEAD)>> $GITHUB_ENV
     - name: Test
       run: |
-          ${{ secrets.DOCKER_USER }}
+          ${{ env.RELEASE_VERSION }}
     #- name: Test
      # run: go test -v .
     - name: Build Go binary
