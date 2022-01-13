@@ -60,8 +60,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/customersvc
-        build_args: |
-          ${{ env.RELEASE_VERSION }}_latest
+        tags: ${{ env.RELEASE_VERSION }},latest
 
    
   build-borrowingsvc:
@@ -88,5 +87,4 @@ jobs:
         username: ${{secrets.DOCKER_USER}}
         password: ${{secrets.DOCKER_REPO_PASS}}
         repository: ${{secrets.DOCKER_USER}}/borrowingsvc
-        build_args: |
-          ${{ env.RELEASE_VERSION }}_latest
+        tags: ${{ env.RELEASE_VERSION }},latest
