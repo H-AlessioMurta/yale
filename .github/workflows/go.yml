@@ -22,7 +22,7 @@ jobs:
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}"$(git rev-parse --short HEAD)>> $GITHUB_ENV
     - name: Test
       run: |
-          echo ${{ env.RELEASE_VERSION }}
+          echo ${{ env.RELEASE_VERSION }} ${{ secrets.DOCKER_USER }}
     #- name: Test
      # run: go test -v .
     - name: Build Go binary
@@ -36,6 +36,8 @@ jobs:
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
         tags: ${{ env.RELEASE_VERSION }},latest
+        tag_with_ref: true
+        tag_with_sha: true
           
           
   build-customersvc:
