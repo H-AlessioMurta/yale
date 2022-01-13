@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM golang:1.17-alpine 
-WORKDIR /booksvc
+WORKDIR borrowingsvc
 # Insert all dependecies
 COPY go.mod ./
 COPY go.sum ./

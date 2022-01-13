@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM golang:1.17-alpine 
-WORKDIR /booksvc
+WORKDIR booksvc
 # Insert all dependecies
 COPY go.mod ./
 COPY go.sum ./
@@ -14,6 +14,7 @@ COPY . .
 #building the bim exec and calling docker-booksvc
 RUN go build -o ./docker-yale-booksvc
 # using the port 8013
+ENV PORT 8013
 EXPOSE 8013
 #on start execute comands
 
