@@ -91,9 +91,9 @@ jobs:
       with:
         path: borrowing/
         dockerfile: borrowing/Dockerfile
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_REPO_PASS}}
-        repository: ${{ secrets.DOCKER_USER }}/borrowingsvc
+        username: ${{secrets.DOCKER_USER}}
+        password: ${{secrets.DOCKER_REPO_PASS}}
+        repository: ${{secrets.DOCKER_USER}}/borrowingsvc
         tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}_${{ steps.get_branch.outputs.BRANCH }}, latest
-      #  build_args: |
-       #   TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}-${{ steps.get_branch.outputs.BRANCH }}
+        build_args: |
+          TAG=${{ steps.get_commit_sha.outputs.COMMIT_SHA }}${{ steps.get_branch.outputs.BRANCH }}
