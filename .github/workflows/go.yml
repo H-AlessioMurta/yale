@@ -19,11 +19,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set env
-      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV, 
+           echo "COMMIT"=$(git rev-parse --short HEAD) >> $GITHUB_ENV
     - name: Test
       run: |
           echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
+          echo $COMMIT
+          echo ${{ env.COMMIT }}
     - name: Get branch
       id: get_branch
       run: echo ::set-output name=BRANCH::$(echo $GITHUB_REF)
@@ -46,7 +49,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_REPO_PASS}}
         repository: ${{ secrets.DOCKER_USER }}/booksvc
-        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}_${{ steps.get_branch.outputs.BRANCH }}, latest
+        tags: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}_${{ RELEASE_VERSION}}, latest
         
         
     
