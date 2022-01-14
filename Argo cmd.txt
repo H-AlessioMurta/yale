@@ -24,3 +24,8 @@ kubectl apply -f borrowingsvc.yaml
 
 
 kubectl describe pod elasticsearch
+kubectl get service borrowingsvc --output='jsonpath="{.spec.ports[0].nodePort}"'
+
+kubectl expose deployment borrowingsvc --type=LoadBalancer --port=8080
+
+borrowingsvc 

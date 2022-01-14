@@ -17,8 +17,8 @@ import (
 )
 
 const (
-	BOOKAPI = "http://localhost:8013/books"
-	CUSTOMERAPI = "http://localhost:8014/customers"
+	BOOKAPI = "http://192.168.49.2:30155/books"
+	CUSTOMERAPI = "http://192.168.49.2:31628/customers"
 )
 
 
