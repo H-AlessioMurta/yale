@@ -9,3 +9,18 @@ argocd app create yale \
     --sync-option CreateNamespace=true \
     --revision master 
 application 'yale' created
+
+argocd login localhost:4000 --insecure --username admin --grpc-web  --password DhR1sqhpM3HD8PTZ
+
+
+helm install --values dbBorrow.yaml borrowing-mongodb bitnami/mongodb
+helm install --values dbCustomer.yaml customer-postgres bitnami/postgresql
+helm install --values dbBook.yaml book-postgres bitnami/postgresql
+
+
+kubectl apply -f customersvc.yaml
+kubectl apply -f booksvc.yaml
+kubectl apply -f borrowingsvc.yaml
+
+
+kubectl describe pod elasticsearch

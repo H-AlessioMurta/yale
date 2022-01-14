@@ -33,19 +33,7 @@ spec:
             memory: "128Mi"
             cpu: "250m"
         ports:
-        - containerPort: 8014
-        readinessProbe:
-          httpGet:
-            path: /query
-            port: 8014
-          initialDelaySeconds: 5
-          timeoutSeconds: 5
-        livenessProbe:
-         httpGet:
-            path: /query
-            port: 8014
-          initialDelaySeconds: 5
-          timeoutSeconds: 5       
+        - containerPort: 8014     
         env:
         - name: PORT
           value: "8014"
@@ -60,18 +48,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 8014
+    - name: http
+      port: 8014
+      targetPort: 8014
   selector:
     app: customersvc
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: customersvc
-  labels:
-    app: customersvc
-    tier: backend
-spec:
-  backend:
-    serviceName: customersvc
-    servicePort: 8014

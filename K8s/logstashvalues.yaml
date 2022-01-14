@@ -23,8 +23,6 @@ logstashConfig:
     xpack.monitoring.enabled: true
     xpack.monitoring.elasticsearch.username: elastic
     xpack.monitoring.elasticsearch.password: changeme
-
-
 # Allows you to add any pipeline files in /usr/share/logstash/pipeline/
 ### ***warn*** there is a hardcoded logstash.conf in the image, override it first
 logstashPipeline:
@@ -33,14 +31,11 @@ logstashPipeline:
       beats {
         port => 5044
       }
-
       tcp {
         port => 5000
       }
     }
-
     ## Add your filters / logstash plugins configuration here
-
     output {
       elasticsearch {
         hosts => "elasticsearch:9200"
@@ -49,3 +44,4 @@ logstashPipeline:
         ecs_compatibility => disabled
       }
     }
+

@@ -13,7 +13,7 @@ import (
 
 //Parameters for connecting on a postgreSql server hosted on a docker image
 const (
-    DB_HOST = "localhost"
+    DB_HOST = "book-postgres"
     DB_PORT = 5432
     DB_USER     = "postgres"
     DB_PASSWORD = "postgres"
