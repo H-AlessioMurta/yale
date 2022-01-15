@@ -22,7 +22,7 @@ const (
 	//Different version of trying the connection to our Database on docker's build or k8's pod
 	//First: local connection
 	//DB_URI = "mongodb://localhost:27017"
-	DB_URI = "mongodb://localhost:27017"
+	DB_URI = "mongodb://borrowing-mongodbow-:27017"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
