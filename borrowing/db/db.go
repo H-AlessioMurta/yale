@@ -19,17 +19,28 @@ import(
 )
 
 const (
-	DB_URI = "mongodb://10.109.11.167:27017"
+	//Different version of trying the connection to our Database on docker's build or k8's pod
+	//First: local connection
+	//DB_URI = "mongodb://localhost:27017"
+	DB_URI = "mongodb://localhost:27017"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
+
+
+
 
 type DB struct {
 	client *mongo.Client
 }
 
-func Connect() *DB {	
-	client, err := mongo.NewClient(options.Client().ApplyURI(DB_URI))
+func Connect() *DB {
+	credential := options.Credential{
+		Username: "root",
+		Password: "root",
+	 }	
+	clientOption := options.Client().ApplyURI(DB_URI).SetAuth(credential)
+	client, err := mongo.NewClient(clientOption)
 	l.CheckErr(err)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
