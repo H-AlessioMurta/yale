@@ -19,7 +19,6 @@ func TestMain(m *testing.M) {
     ensureTableExists()
     //fmt.Println("TestMain")
     code := m.Run()
-    //clearTable()
     os.Exit(code)
 }
 

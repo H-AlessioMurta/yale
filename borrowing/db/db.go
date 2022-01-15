@@ -19,7 +19,7 @@ import(
 )
 
 const (
-	DB_URI = "mongodb://borrowing-mongodb:27017"
+	DB_URI = "mongodb://10.109.11.167:27017"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
