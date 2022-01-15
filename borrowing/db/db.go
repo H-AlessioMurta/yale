@@ -36,6 +36,7 @@ type DB struct {
 
 func Connect() *DB {
 	credential := options.Credential{
+		AuthSource: "mongoDB",
 		Username: "root",
 		Password: "root",
 	 }	
