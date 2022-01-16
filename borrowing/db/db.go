@@ -25,7 +25,7 @@ const (
 	//First: local connection
 	//DB_URI = "mongodb://localhost:27017"
 	//DB_URI = "mongodb://borrowing-mongo:27017"
-	DB_URI = "mongodb://root:root@borrowing-mongodb:27017/?connect=direct"
+	DB_URI = "mongodb://root:root@10.98.86.18:27107"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
@@ -38,19 +38,15 @@ type DB struct {
 }
 
 func Connect() *DB {
-	fmt.Println("e daje", os.Getenv("stocazzo"))
+	fmt.Println("e daje", os.Getenv("MONGODB_EXTRA_USERNAMES"))
 	clientOption := options.Client().ApplyURI(DB_URI)
 	client, err := mongo.NewClient(clientOption)
 	l.CheckErr(err)
-	fmt.Println("ponk")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
 	defer cancel()
 	err = client.Connect(ctx)
 	l.CheckErr(err)
-	fmt.Println("ponk")
-	db := client.Database("mongoDb")
-	fmt.Println(db.Name())
-	//err = client.Ping(ctx, nil)
+	err = client.Ping(ctx, nil)
 	l.CheckErr(err)
 	l.LogInfo("Connected to Mongo db")
 	return &DB{

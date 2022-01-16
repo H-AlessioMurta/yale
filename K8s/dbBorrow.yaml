@@ -1,7 +1,142 @@
----
+fullnameOverride: "mongo-db"
+## @param clusterDomain Default Kubernetes cluster domain
+##
+clusterDomain: cluster.local
+
+image:
+  registry: docker.io
+  repository: bitnami/mongodb
+  tag: 4.4.11-debian-10-r12
+  pullPolicy: IfNotPresent
+  debug: true
+
+#architecture: standalone
+#useStatefulSet: false
+
 auth:
+  ## @param auth.enabled Enable authentication
+  ## ref: https://docs.mongodb.com/manual/tutorial/enable-authentication/
+  ##
   enabled: true
-  rootPassword: root
-  username: root
-  password: root
-  database: mongoDB
+  ## @param auth.rootUser MongoDB&reg; root user
+  ##
+  rootUser: root
+  ## @param auth.rootPassword MongoDB&reg; root password
+  ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#setting-the-root-password-on-first-run
+  ##
+  rootPassword: "root"
+  ## MongoDB&reg; custom users and databases
+  ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#creating-users-and-databases-on-first-run
+  ## @param auth.usernames List of custom users to be created during the initialization
+  ## @param auth.passwords List of passwords for the custom users set at `auth.usernames`
+  ## @param auth.databases List of custom databases to be created during the initialization
+  ##
+  usernames: ["murta"]
+  passwords: ["01"]
+  databases: ["borrows"]
+
+
+## Service parameters
+##
+service:
+  type: ClusterIP
+  ## @param service.port MongoDB&reg; service port
+  ##
+  port: 27017
+  ## @param service.portName MongoDB&reg; service port name
+  ##
+  portName: mongodb
+  ## @param service.nodePort Port to bind to for NodePort and LoadBalancer service types
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  nodePort: ""
+  ## @param service.clusterIP MongoDB&reg; service cluster IP
+  ## e.g:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.externalIPs Specify the externalIP value ClusterIP service type.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
+  ##
+  externalIPs: []
+  ## @param service.loadBalancerIP loadBalancerIP for MongoDB&reg; Service
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
+  ##
+  loadBalancerIP: ""
+  ## @param service.loadBalancerSourceRanges Address(es) that are allowed when service is LoadBalancer
+  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.annotations Provide any additional annotations that may be required
+  ##
+  annotations: {}
+## External Access to MongoDB&reg; nodes configuration
+##
+externalAccess:
+  ## @param externalAccess.enabled Enable Kubernetes external cluster access to MongoDB&reg; nodes (only for replicaset architecture)
+  ##
+  enabled: true
+  ## External IPs auto-discovery configuration
+  ## An init container is used to auto-detect LB IPs or node ports by querying the K8s API
+  ## Note: RBAC might be required
+  ##
+  autoDiscovery:
+    ## @param externalAccess.autoDiscovery.enabled Enable using an init container to auto-detect external IPs by querying the K8s API
+    ##
+    enabled: true
+    ## Bitnami Kubectl image
+    ## ref: https://hub.docker.com/r/bitnami/kubectl/tags/
+    ## @param externalAccess.autoDiscovery.image.registry Init container auto-discovery image registry
+    ## @param externalAccess.autoDiscovery.image.repository Init container auto-discovery image repository
+    ## @param externalAccess.autoDiscovery.image.tag Init container auto-discovery image tag (immutable tags are recommended)
+    ## @param externalAccess.autoDiscovery.image.pullPolicy Init container auto-discovery image pull policy
+    ## @param externalAccess.autoDiscovery.image.pullSecrets Init container auto-discovery image pull secrets
+    ##
+    image:
+      registry: docker.io
+      repository: bitnami/kubectl
+      tag: 1.23.1-debian-10-r23
+      ## Specify a imagePullPolicy
+      ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+      ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+      ##
+      pullPolicy: IfNotPresent
+      ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      ## Example:
+      ## pullSecrets:
+      ##   - myRegistryKeySecretName
+      ##
+      pullSecrets: []
+    ## Init Container resource requests and limits
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## We usually recommend not to specify default resources and to leave this as a conscious
+    ## choice for the user. This also increases chances charts run on environments with little
+    ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+    ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    ## @param externalAccess.autoDiscovery.resources.limits Init container auto-discovery resource limits
+    ## @param externalAccess.autoDiscovery.resources.requests Init container auto-discovery resource requests
+    ##
+    resources:
+      ## Example:
+      ## limits:
+      ##    cpu: 100m
+      ##    memory: 128Mi
+      ##
+      limits: {}
+      ## Examples:
+      ## requests:
+      ##    cpu: 100m
+      ##    memory: 128Mi
+      ##
+      requests: {}
+  ## Parameters to configure K8s service(s) used to externally access MongoDB&reg;
+  ## A new service per broker will be created
+  ##
+  service:
+    ## @param externalAccess.service.type Kubernetes Service type for external access. Allowed values: NodePort, LoadBalancer or ClusterIP
+    ##
+    type: LoadBalancer
+    ## @param externalAccess.service.port MongoDB&reg; port used for external access when service type is LoadBalancer
+    ##
+    port: 27017
