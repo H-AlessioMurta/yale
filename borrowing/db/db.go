@@ -32,13 +32,21 @@ type DB struct {
 }
 
 func Connect() *DB {	
-	client, err := mongo.NewClient(options.Client().ApplyURI(DB_URI))
+	credential := options.Credential{
+		AuthSource: "user",
+		Username: "root",
+		Password: "root",
+		//Databases: "Borrows",
+	}
+	
+	opt := options.Client().ApplyURI(DB_URI).SetAuth(credential)
+	client, err := mongo.NewClient(opt)
 	l.CheckErr(err)
 	//ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	ctx := context.Background()
 	err = client.Connect(ctx)
 	l.CheckErr(err)
-	//err = client.Ping(ctx, nil)
+	err = client.Ping(ctx, nil)
 	l.CheckErr(err)
 	l.LogInfo("Connected to Mongo db")
 	return &DB{
