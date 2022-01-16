@@ -24,7 +24,7 @@ const (
 	//First: local connection
 	//DB_URI = "mongodb://localhost:27017"
 	//DB_URI = "mongodb://borrowing-mongo:27017"
-	DB_URI = "mongodb://mongo-db:27107"
+	DB_URI = "mongodb://10.98.86.18:27107"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
@@ -36,12 +36,10 @@ type DB struct {
 	client *mongo.Client
 }
 
-func Connect() *DB {
-	
-	clientOption := options.Client().ApplyURI(DB_URI)
-	client, err := mongo.NewClient(clientOption)
+func Connect() *DB {	
+	client, err := mongo.NewClient(options.Client().ApplyURI(DB_URI))
 	l.CheckErr(err)
-	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	err = client.Connect(ctx)
 	l.CheckErr(err)
