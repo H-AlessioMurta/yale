@@ -34,8 +34,8 @@ type DB struct {
 func Connect() *DB {	
 	client, err := mongo.NewClient(options.Client().ApplyURI(DB_URI))
 	l.CheckErr(err)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	//ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx := context.Background()
 	err = client.Connect(ctx)
 	l.CheckErr(err)
 	err = client.Ping(ctx, nil)
