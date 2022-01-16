@@ -16,13 +16,16 @@ import(
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"os"
+	"fmt"
 )
 
 const (
 	//Different version of trying the connection to our Database on docker's build or k8's pod
 	//First: local connection
 	//DB_URI = "mongodb://localhost:27017"
-	DB_URI = "mongodb://borrowing-mongo:27017"
+	//DB_URI = "mongodb://borrowing-mongo:27017"
+	DB_URI = "mongodb://root:root@borrowing-mongodb:27017/?connect=direct"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
@@ -35,18 +38,19 @@ type DB struct {
 }
 
 func Connect() *DB {
-	credential := options.Credential{
-		AuthSource: "root",
-		Username: "root",
-		Password: "root",
-	 }	
-	clientOption := options.Client().ApplyURI(DB_URI).SetAuth(credential)
+	fmt.Println("e daje", os.Getenv("stocazzo"))
+	clientOption := options.Client().ApplyURI(DB_URI)
 	client, err := mongo.NewClient(clientOption)
 	l.CheckErr(err)
+	fmt.Println("ponk")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	err = client.Connect(ctx)
-	err = client.Ping(ctx, nil)
+	l.CheckErr(err)
+	fmt.Println("ponk")
+	db := client.Database("mongoDb")
+	fmt.Println(db.Name())
+	//err = client.Ping(ctx, nil)
 	l.CheckErr(err)
 	l.LogInfo("Connected to Mongo db")
 	return &DB{
@@ -74,6 +78,7 @@ func (db *DB)NewBorrow(input *model.BorrowedCreate) *model.Borrowed {
 	l.LogResponseBorrowing(&newBorrow)
 	return &newBorrow
 }
+
 //Set true returned a specific idborrowing's borrow 
 func (db *DB)Returnedbook(id *string) (*model.Borrowed, error) {
 	newID:=*id
