@@ -38,7 +38,7 @@ func Connect() *DB {
 	defer cancel()
 	err = client.Connect(ctx)
 	l.CheckErr(err)
-	//err = client.Ping(ctx, nil)
+	err = client.Ping(ctx, nil)
 	l.CheckErr(err)
 	l.LogInfo("Connected to Mongo db")
 	return &DB{
