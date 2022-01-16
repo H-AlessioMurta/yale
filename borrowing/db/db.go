@@ -25,7 +25,7 @@ const (
 	//First: local connection
 	//DB_URI = "mongodb://localhost:27017"
 	//DB_URI = "mongodb://borrowing-mongo:27017"
-	DB_URI = "mongodb://murta:01@mongo-db:27107"
+	DB_URI = "mongodb://mongo-db:27107"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
@@ -38,7 +38,7 @@ type DB struct {
 }
 
 func Connect() *DB {
-	fmt.Println("e daje", os.Getenv("MONGODB_EXTRA_USERNAMES"))
+	
 	clientOption := options.Client().ApplyURI(DB_URI)
 	client, err := mongo.NewClient(clientOption)
 	l.CheckErr(err)
