@@ -25,7 +25,7 @@ const (
 	//First: local connection
 	//DB_URI = "mongodb://localhost:27017"
 	//DB_URI = "mongodb://borrowing-mongo:27017"
-	DB_URI = "mongodb://root:root@mongo-db:27107"
+	DB_URI = "mongodb://murta:01@mongo-db:27107"
 	mongoDB = "mongoDB"
 	collection =  "Borrows"
 )
