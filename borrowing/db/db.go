@@ -33,7 +33,7 @@ type DB struct {
 
 func Connect() *DB {	
 	credential := options.Credential{
-		AuthSource: "user",
+		AuthSource: "admin",
 		Username: "root",
 		Password: "root",
 		//Databases: "Borrows",
