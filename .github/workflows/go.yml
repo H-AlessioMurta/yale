@@ -88,3 +88,26 @@ jobs:
         password: ${{secrets.DOCKER_REPO_PASS}}
         repository: ${{secrets.DOCKER_USER}}/borrowingsvc
         tags: ${{ env.RELEASE_VERSION }},latest
+        
+  build-notificationsvc:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: notificationsvc
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set env
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}"-$(git rev-parse --short HEAD)>> $GITHUB_ENV
+    #- name: Test
+     # run: go test -v .
+    - name: Build Go binary
+      run: go build .
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v1.1.0 
+      with:
+        path: booksvc/
+        dockerfile: notificationsvc/Dockerfile
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_REPO_PASS}}
+        repository: ${{ secrets.DOCKER_USER }}/notificationsvc
+        tags: ${{ env.RELEASE_VERSION }},latest
