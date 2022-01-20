@@ -63,7 +63,7 @@ func (b *Book) deleteBook(db *sql.DB) error {
     _, err := db.Exec("DELETE FROM books WHERE id=$1", b.ID)
     return err
 }
-
+//Check for avoid to repeat Book's model params
 func (b *Book) postBook(db *sql.DB) error {
     var i int
     err := db.QueryRow("SELECT COUNT(*) FROM books WHERE title =$1 AND authors = $2",b.Title, b.Authors).Scan(&i)

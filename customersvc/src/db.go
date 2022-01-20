@@ -68,10 +68,10 @@ func (c *Customer) deleteCustomer(db *sql.DB) error {
     _, err := db.Exec("DELETE FROM customers WHERE id=$1", c.ID)
     return err
 }
-
+//Check for avoid to repeat Customr's model params
 func (c *Customer) postCustomer(db *sql.DB) error {
     var i int
-    err := db.QueryRow("SELECT COUNT(*) FROM cusomers WHERE name =$1 AND surname = $2 and nin =3",c.Name, c.Surname, c.Nin).Scan(&i)
+    err := db.QueryRow("SELECT COUNT(*) FROM customers WHERE name =$1 AND surname = $2 and nin =3",c.Name, c.Surname, c.Nin).Scan(&i)
     checkErr(err)
     if i < 1{      
         _, err := db.Exec("INSERT INTO customers(name,surname,nin) VALUES($1, $2,$3)", c.Name, c.Surname, c.Nin)
