@@ -1,0 +1,41 @@
+argocd app create yale \
+    --repo https://github.com/H-AlessioMurta/yale \
+    --path https://github.com/H-AlessioMurta/yale/K8s/  \
+    --dest-server https://kubernetes.default.svc \
+    --dest-namespace default \
+    --auto-prune \
+    --self-heal \
+    --sync-policy auto \
+    --sync-option CreateNamespace=true \
+    --revision master 
+application 'yale' created
+
+argocd login localhost:4000 --insecure --username admin --grpc-web  --password DhR1sqhpM3HD8PTZ
+
+
+helm install --values dbBorrow.yaml borrowing-mongodb bitnami/mongodb
+helm install --values dbCustomer.yaml customer-postgres bitnami/postgresql
+helm install --values dbBook.yaml book-postgres bitnami/postgresql
+
+
+kubectl apply -f customersvc.yaml
+kubectl apply -f booksvc.yaml
+kubectl apply -f borrowingsvc.yaml
+helm install --values kibana-values.yaml kibana elastic/kibana
+helm install --values filebeat-values.yaml filebeat elastic/filebeat
+helm install --values logstash-values.yaml logstash elastic/logstash
+kubectl describe pod elasticsearch
+
+
+kubectl expose deployment borrows-mongodb-5599bcbf7d-vzfsx --type=NodePort 
+kubectl expose deployment book-postgres-0 --type=NodePort 
+kubectl expose deployment customer-postgres-0  --type=NodePort 
+
+
+kubectl port-forward svc/elasticsearch 9200
+kubectl port-forward svc/kibana 5600
+kubectl get service borrowingsvc --output='jsonpath="{.spec.ports[0].nodePort}"'
+
+kubectl expose deployment borrowingsvc --type=LoadBalancer --port=8080
+
+borrowingsvc 

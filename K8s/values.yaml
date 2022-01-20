@@ -21,3 +21,5 @@ volumeClaimTemplate:
   resources:
     requests:
       storage: 100M
+
+fullnameOverride: elasticsearch

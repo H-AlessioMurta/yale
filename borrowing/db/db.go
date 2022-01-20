@@ -16,7 +16,6 @@ import(
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-
 )
 
 const (
@@ -53,6 +52,8 @@ func Connect() *DB {
 		client: client,
 	}
 }
+
+
 //Add a new borrow
 func (db *DB)NewBorrow(input *model.BorrowedCreate) *model.Borrowed {
 	t := time.Now()

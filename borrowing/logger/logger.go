@@ -1,4 +1,5 @@
 package logger
+
 // A custom modification for log, just adding same flavour color and specific intercation for our graph/model
 import (
     "net/http"
