@@ -50,7 +50,8 @@ input Borrowed_create{
 
 type Mutation{
     Borrow_create(data: Borrowed_create!):Borrowed
-    Returnedbook(id:ID):Borrowed
+    Returned_Book(id:ID):Borrowed
+    Delete_Borrow(id:ID):String
     Post_Book(title: String,authors:String):Book
     Put_Book(id:ID,title: String,authors:String):Book
     Delete_Book(id:ID):String

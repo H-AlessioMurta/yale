@@ -29,9 +29,14 @@ func (r *mutationResolver) BorrowCreate(ctx context.Context, data model.Borrowed
 	}
 }
 
-func (r *mutationResolver) Returnedbook(ctx context.Context, id *string) (*model.Borrowed, error) {
+func (r *mutationResolver) ReturnedBook(ctx context.Context, id *string) (*model.Borrowed, error) {
 	l.LogGraph("Mutation Ask: \033[32m[Returnedbook]\033[0m with inputs:\n" + *id)
 	return db.Returnedbook(id)
+}
+
+func (r *mutationResolver) DeleteBorrow(ctx context.Context, id *string) (*string, error) {
+	l.LogGraph("Mutation Ask: \033[32m[DeleteBorrow]\033[0m with inputs:\n" + *id)
+	return db.RemoveBorrow(id)
 }
 
 func (r *mutationResolver) PostBook(ctx context.Context, title *string, authors *string) (*model.Book, error) {
@@ -141,5 +146,9 @@ type queryResolver struct{ *Resolver }
 //  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
 //    it when you're done.
 //  - You have helper methods in this file. Move them out to keep these resolver files clean.
-var db = dbmong.Connect()
+func (r *mutationResolver) Returnedbook(ctx context.Context, id *string) (*model.Borrowed, error) {
+	l.LogGraph("Mutation Ask: \033[32m[Returnedbook]\033[0m with inputs:\n" + *id)
+	return db.Returnedbook(id)
+}
 
+var db = dbmong.Connect()

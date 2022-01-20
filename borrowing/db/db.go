@@ -16,6 +16,7 @@ import(
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"strconv"
 )
 
 const (
@@ -53,7 +54,7 @@ func Connect() *DB {
 	}
 }
 
-
+// A custom function to connect not to a local/clustered mongo but to atlas mongodb
 func ConnectToAtlas() *DB {	
 
 	opt := options.Client().ApplyURI("mongodb+srv://h:h@cluster0.gamsi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
@@ -123,6 +124,8 @@ func (db *DB)Borrow(id *string) (*model.Borrowed, error) {
 	l.LogResponseBorrowing(&aborrow)
 	return &aborrow,err
 }
+
+
 //fetching all borrows
 func (db *DB)Borrows() ([]*model.Borrowed,error) {
 	collection := db.client.Database(mongoDB).Collection(collection)
@@ -182,6 +185,20 @@ func (db *DB) Borrowsforcustomer(id string) []*model.Borrowed {
 		l.LogResponseBorrowing(&aborrow)
 	}
 	return borrows
+}
+
+func (db *DB)RemoveBorrow(id *string) (*string, error) {
+	
+	newID:=*id
+	filter := bson.M{"idborrowing":newID}
+	collection := db.client.Database(mongoDB).Collection(collection)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	res, err := collection.DeleteOne(ctx,filter)
+	l.CheckErr(err)
+	response:= strconv.Itoa(int(res.DeletedCount))
+	l.LogResponse("Deleted "+response+" element/s")
+	return &response,err
 }
 
 // fetching all borrows with same book
