@@ -25,6 +25,6 @@ func main() {
 	http.Handle("/query", srv)
 	log.SetPrefix("\033[36mborrowingsvc\033[0m: ")
 	log.SetOutput(os.Stdout)
-	l.LogInfo("connect to http://localhost:"+port+"/ for GraphQL playground")
+	l.LogInfo("connect to "+port+"/ for GraphQL playground")
 	http.ListenAndServe(":"+port, nil)
 }

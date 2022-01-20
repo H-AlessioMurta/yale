@@ -6,7 +6,7 @@ WORKDIR /customersvc
 COPY go.mod ./
 COPY go.sum ./
 #Installing on our docker immage
-RUN go mod download
+#RUN go mod download
 #Copy all .go files of our project
 COPY . .
 #Run tests

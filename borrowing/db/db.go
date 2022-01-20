@@ -54,6 +54,24 @@ func Connect() *DB {
 }
 
 
+func ConnectToAtlas() *DB {	
+
+	opt := options.Client().ApplyURI("mongodb+srv://h:h@cluster0.gamsi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+	client, err := mongo.NewClient(opt)
+	l.CheckErr(err)
+	//ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx := context.Background()
+	err = client.Connect(ctx)
+	l.CheckErr(err)
+	err = client.Ping(ctx, nil)
+	l.CheckErr(err)
+	l.LogInfo("Connected to Mongo Atlas")
+	return &DB{
+		client: client,
+	}
+}
+
+
 //Add a new borrow
 func (db *DB)NewBorrow(input *model.BorrowedCreate) *model.Borrowed {
 	t := time.Now()

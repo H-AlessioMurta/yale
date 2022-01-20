@@ -6,6 +6,8 @@ import (
     "log"
     "yale/borrowing/graph/model" 
     "strconv"
+	"encoding/json"
+	"strings"
 )
 
 func LogInfo(message string) {
@@ -24,7 +26,11 @@ func LogError(message string) {
 }
 
 func LogFatal(message string, e error) {
-    message = "\033[31m[FATAL]\033[0m:"+message
+    message = "\033[31m[FATAL]\033[0m:"+message+"\nError:"+e.Error()
+	resp, err := http.Post("https://notificationsvc:3000", "application/json",strings.NewReader(e.Error()))
+	CheckErr(err)
+	var res map[string]interface{}
+	json.NewDecoder(resp.Body).Decode(&res)
     log.Fatalf(message)
 }
 

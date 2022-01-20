@@ -2,8 +2,9 @@ package booksvc
 
 import (
     "net/http"
-    "encoding/json"
-    "log"    
+    "log"
+	"encoding/json"
+	"strings"    
 )
 
 /*colorReset := "\033[0m"
@@ -31,9 +32,13 @@ func logError(message string) {
     log.Println(message)
 }
 
-func logFatal(message string) {
-    message = "\033[31m[FATAL]\033[0m:"+message
-    log.Fatal(message)
+func LogFatal(message string, e error) {
+    message = "\033[31m[FATAL]\033[0m:"+message+"\nError:"+e.Error()
+	resp, err := http.Post("https://notificationsvc:3000", "application/json",strings.NewReader(e.Error()))
+	checkErr(err)
+	var res map[string]interface{}
+	json.NewDecoder(resp.Body).Decode(&res)
+    log.Fatalf(message)
 }
 
 func logRequest(r *http.Request) {

@@ -21,7 +21,7 @@ import (
 //gqlgen's server for handling request in Graphql 
 var srv = handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 //A new connection to our borrowing's mongo collection Borrows
-var db = mongoDB.Connect()
+var db = mongoDB.ConnectToAtlas()
 //Storing the id of the new element when created, because uuid is unprevedible
 var idB, idC, idBorr string
 
