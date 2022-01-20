@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.17-alpine 
+FROM golang:1.16-alpine 
 WORKDIR /customersvc
 # Insert all dependecies
 COPY go.mod ./
 COPY go.sum ./
 #Installing on our docker immage
-#RUN go mod download
+RUN go mod download
 #Copy all .go files of our project
 COPY . .
 #Run tests
