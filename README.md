@@ -1,5 +1,5 @@
 # Yet Another Library Example
-As a student developer, I happened to practice a lot using libraries almost always as representations.
+As a student developer, I happened to practice a lot using libraries, almost always as representations.
 Y.A.L.E.
 The aim is to structure three microservices, put them in synchronous communication and exploit the Githubactions to build a Kubernetes cluster able to keep them in execution.
 
