@@ -12,7 +12,7 @@ The aim is to structure three microservices, put them in synchronous communicati
 
 - [x] Applying a design pattern
 
--Microservices are in CI/CD
+- [x] Microservices are in CI/CD
 ## Fails&Bugs at the moment ( AKA Improvements to do list)
 - [ ] No enviroment's keys automation, the code is pretty forced because no configmap was settled on k8's cluster
 
