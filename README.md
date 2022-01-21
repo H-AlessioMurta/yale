@@ -45,7 +45,7 @@ Http handler was written with the open library [Gorilla Mux](https://github.com/
 
 
 <img src="https://external-preview.redd.it/SmsJqB8DdKq1FhsuBSAMN2rpZVEumG2wcBsHqKJEVK4.jpg?auto=webp&s=c2b78c143fe2f6e9e2c228db02c96ad88314e052" width="85">
-[Postgresql's Driver](github.com/lib/pq)
+[Postgresql's Driver](https://github.com/lib/pq)
 
 ### Borrowingsvc
 
