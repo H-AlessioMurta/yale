@@ -57,7 +57,7 @@ func Connect() *DB {
 // A custom function to connect not to a local/clustered mongo but to atlas mongodb
 func ConnectToAtlas() *DB {	
 
-	opt := options.Client().ApplyURI("mongodb+srv://h:h@cluster0.gamsi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+	opt := options.Client().ApplyURI("mongodb+srv://cluster0.gamsi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 	client, err := mongo.NewClient(opt)
 	l.CheckErr(err)
 	//ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
