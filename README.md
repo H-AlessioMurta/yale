@@ -24,6 +24,8 @@ The aim is to structure three microservices, put them in synchronous communicati
 
 - [ ] Refactoring of the codes, using scaffolding as Go's best pratices
 
+---
+
 ### Design a solution of [microservices's assignment](https://github.com/sunnyvale-academy/ITS-ICT_Microservices/tree/master/assignments/01-Library_application)
 ![Yale Cluster](https://github.com/H-AlessioMurta/yale/blob/main/K8s%20YALE.jpg)
 I chose the saga pattern, putting a lot of responsibility on the borrowingsvc microservice as orchestrator of all library logic.
@@ -65,6 +67,8 @@ I would have preferred that it was an independent microservice, and that autonom
 Failing this, I preferred to reduce the complexity by using an api rest communication again.
 For the moment.
 
+---
+
 ## Deploy on Kubernetes
 ![Road](https://miro.medium.com/max/873/1*NII9Htj87LjmNIa1PJzgCA.png)
 
@@ -90,4 +94,6 @@ $ helm install --values kibana-values.yaml kibana elastic/kibana
 $ helm install --values filebeat-values.yaml filebeat elastic/filebeat
 $ helm install --values logstash-values.yaml logstash elastic/logstash
 ```
+---
+
 
