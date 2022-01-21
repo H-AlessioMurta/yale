@@ -29,7 +29,7 @@ The aim is to structure three microservices, put them in synchronous communicati
 ### Design a solution of [microservices's assignment](https://github.com/sunnyvale-academy/ITS-ICT_Microservices/tree/master/assignments/01-Library_application)
 ![Yale Cluster](https://github.com/H-AlessioMurta/yale/blob/main/K8s%20YALE.jpg)
 
-I chose the *** saga pattern ***, putting a lot of responsibility on the borrowingsvc microservice as orchestrator of all library logic.
+I chose the **saga pattern**, putting a lot of responsibility on the borrowingsvc microservice as orchestrator of all library logic.
 Not only does it manage the entity defined by the borrowed model,but it requests and manages all CRUD operations on books and customers.
 The main benefit of the Saga Pattern is that it helps maintain data consistency across multiple services without tight coupling, spreading errors and messages between all the microservices involved.
 Each microservices will properly log on stdout what it is doing, and who asked for.
